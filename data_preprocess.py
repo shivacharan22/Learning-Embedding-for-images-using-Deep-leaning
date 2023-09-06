@@ -2,6 +2,21 @@ import pandas as pd
 from data_loader import dataa_loader,cu_df_loader
 
 def preprocess():
+    """ 
+    Preprocess the dataset by creating triplets.
+    
+    This function preprocesses the dataset by creating triplets based on the number of samples.
+    It generates triplets with anchor, positive, and negative samples for use in triplet loss training.
+
+    Args:
+        None
+
+    Returns:
+        pd.DataFrame: A preprocessed dataset containing triplets.
+
+    Example:
+        preprocessed_data = preprocess()
+    """
     dataset = dataa_loader()
     dicr = {"galary":2871,"toys":3408,"dishes":12919,"house":17563,"landmarks": 25830}
 

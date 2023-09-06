@@ -1,4 +1,17 @@
+
 def move_to(obj):
+  """ 
+    Recursively move elements within a dictionary or NumPy array to PyTorch tensors.
+    
+    Args:
+        obj: A dictionary or NumPy array containing elements to be converted to PyTorch tensors.
+        
+    Returns:
+        dict or torch.Tensor: The input object with elements converted to PyTorch tensors.
+    
+    Raises:
+        TypeError: If the input type is not a dictionary or NumPy array.
+    """
   if isinstance(obj, dict):
     res = {}
     for k, v in obj.items():
@@ -10,6 +23,18 @@ def move_to(obj):
     raise TypeError("Invalid type for move_to")
 
 def model_select(i : int):
+    """ 
+    Select and save a PyTorch model based on the given index.
+    
+    Args:
+        i (int): An integer representing the model selection index (1, 2, or 3).
+        
+    Returns:
+        nn.Module: The selected PyTorch model.
+    
+    Raises:
+        ValueError: If an invalid model index is provided.
+    """
     if i==1:
         model = MyModel()
     elif i==2:
@@ -23,6 +48,17 @@ def model_select(i : int):
     return model
 
 class CustomImageDataset(Dataset):
+    """ 
+    Custom PyTorch dataset for triplet data.
+    
+    This dataset loads triplet samples (anchor, positive, negative) for triplet loss training.
+    
+    Args:
+        annotations_file: A pandas DataFrame containing dataset annotations.
+        
+    Returns:
+        Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: A triplet of tensors (anchor, positive, negative).
+    """
     def __init__(self, annotations_file):
         self.data = annotations_file
 
@@ -64,14 +100,43 @@ class CustomImageDataset(Dataset):
 
 
 def custom_euc_dis(y_predictions, target):
+    """ 
+    Compute the custom Euclidean distance loss between predictions and targets.
+    
+    Args:
+        y_predictions: Predicted values.
+        target: Target values.
+        
+    Returns:
+        torch.Tensor: The computed custom Euclidean distance loss value.
+    """
     loss_value = torch.square(y_predictions - target).sum().sqrt()
     return loss_value
 
 def metric(y_predictions, target):
+    """ 
+    Compute a custom metric based on Euclidean distances between predictions and targets.
+    
+    Args:
+        y_predictions: Predicted values.
+        target: Target values.
+        
+    Returns:
+        torch.Tensor: The computed custom metric value.
+    """
     wanted_value = torch.square(y_predictions - target).sum(0).sqrt()
     return torch.mean(wanted_value)
 
 class TripletLoss(nn.Module):
+    """ 
+    Custom triplet loss function for Siamese networks.
+    
+    Args:
+        margin (float): The margin value for triplet loss.
+        
+    Returns:
+        torch.Tensor: The computed triplet loss value.
+    """
     def __init__(self, margin=0.9):
         super(TripletLoss, self).__init__()
         self.margin = margin

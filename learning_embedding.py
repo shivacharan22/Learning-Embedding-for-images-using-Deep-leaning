@@ -21,6 +21,24 @@ from data_preprocess import preprocess
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def main():
+    """ 
+    Main function for training and evaluating a Siamese network using triplet loss.
+    
+    This function performs the following steps:
+    1. Preprocesses the dataset by creating triplets.
+    2. Initializes a custom network with triplet loss.
+    3. Performs K-fold cross-validation for training and evaluation.
+    4. Saves the trained models for each fold.
+
+    Args:
+        None
+
+    Returns:
+        None
+
+    Example:
+        main()
+    """
     Dataset = preprocess()
     training_data = CustomImageDataset(dataset)
 
