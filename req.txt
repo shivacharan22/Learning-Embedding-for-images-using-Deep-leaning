@@ -1,7 +1,0 @@
-timm
-rapids-22.06 
-rapidai 
-nvidia 
-rapids=22.06 
-python=3.9
-cudatoolkit=11.5 
